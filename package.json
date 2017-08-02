@@ -1,0 +1,25 @@
+{
+  "name": "videochat-api",
+  "version": "0.1.0",
+  "description": "The backend for videochat-client",
+  "main": "index.js",
+  "scripts": {
+    "test": "flow"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fczuardi/videochat-api.git"
+  },
+  "keywords": [
+    "helpdesk",
+    "chat",
+    "webrtc",
+    "webpush"
+  ],
+  "author": "Fabricio C Zuardi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fczuardi/videochat-api/issues"
+  },
+  "homepage": "https://github.com/fczuardi/videochat-api#readme"
+}
