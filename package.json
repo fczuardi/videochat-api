@@ -4,7 +4,8 @@
   "description": "The backend for videochat-client",
   "main": "index.js",
   "scripts": {
-    "test": "flow"
+    "start": "nps",
+    "test": "nps test"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/fczuardi/videochat-api/issues"
   },
-  "homepage": "https://github.com/fczuardi/videochat-api#readme"
+  "homepage": "https://github.com/fczuardi/videochat-api#readme",
+  "devDependencies": {
+    "nps": "^5.7.0"
+  }
 }
