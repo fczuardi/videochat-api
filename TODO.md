@@ -1,4 +1,8 @@
 ### WIP
+- API
+  - [ ] graphql interface
+  - [ ] update / put user mutation
+  - [ ] Auth
 - DB
   - [x] function to add / update attendants in the db
 
