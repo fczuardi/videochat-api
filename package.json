@@ -27,7 +27,12 @@
   "devDependencies": {
     "cpy-cli": "^1.0.1",
     "flow-bin": "^0.52.0",
+    "flow-typed": "^2.1.5",
     "nps": "^5.7.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "level": "^1.7.0",
+    "level-sublevel": "^6.6.1",
+    "xtend": "^4.0.1"
+  }
 }

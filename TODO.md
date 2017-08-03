@@ -1,0 +1,10 @@
+### WIP
+- DB
+  - [x] function to add / update attendants in the db
+
+-----
+
+### extra / future /nice to have
+
+- [ ] use a log lib
+- [ ] flow typed definitions for leveldb package
