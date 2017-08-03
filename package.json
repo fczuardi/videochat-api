@@ -28,7 +28,8 @@
     "cpy-cli": "^1.0.1",
     "flow-bin": "^0.52.0",
     "flow-typed": "^2.1.5",
-    "nps": "^5.7.0"
+    "nps": "^5.7.0",
+    "prettier": "^1.5.3"
   },
   "dependencies": {
     "level": "^1.7.0",
