@@ -1,11 +1,11 @@
 // @flow
-type User = {
+export type User = {
     name?: string,
     email?: string
 };
 type UserDBCallback = (err: Error | null, value?: User) => void;
 type GetUser = (key: string, cb: UserDBCallback) => void;
-type PutUser = (key: string, user:User, cb: UserDBCallback) => void;
+type PutUser = (key: string, user: User, cb: UserDBCallback) => void;
 type UpdateUser = (user: User, cb: UserDBCallback) => void;
 
 const extend = require("xtend");
@@ -13,7 +13,7 @@ const db = require("level-sublevel")(require("level")("./db"));
 
 const users = db.sublevel("users", { valueEncoding: "json" });
 
-const getUser : GetUser = (key, cb) =>
+const getUser: GetUser = (key, cb) =>
     users.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
 
 const putUser: PutUser = (key, user, cb) =>
@@ -36,5 +36,6 @@ const updateUser: UpdateUser = (user, cb) => {
 };
 
 module.exports = {
+    getUser,
     updateUser
 };
