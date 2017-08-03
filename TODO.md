@@ -10,5 +10,6 @@
 
 ### extra / future /nice to have
 
+- [ ] precommit hooks
 - [ ] use a log lib
 - [ ] flow typed definitions for leveldb package
