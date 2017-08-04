@@ -5,7 +5,6 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
-  - [ ]  [Client-Attendant] signup flow 
   - [ ]  [Client-Embed] ping attendant 
   - [ ]  [API, DB] list users with filter (from a group, with role attendant, with status available)
   - [ ]  [WebPush] include VAPID and GCM credentials in the config file
@@ -25,6 +24,7 @@ Button on a website that calls the web app in the presenters phone.
   - [ ]  [Architecture, DB, API] roles: attendant, user
   - [ ]  [Architecture, DB, API] attendant groups (employee/customer)
   - [ ]  [Architecture, DB, API] attendant status: available, offline, chatting
+  - [x]  [Client-Attendant, signup] create user call 
   - [x]  [API, DB] list users
   - [x]  [Documentation] README with graphQL samples
   - [x]  [API] update / put user mutation
