@@ -2,6 +2,7 @@
 - Documentaion
   - [x] README with graphQL samples
 - API
+  - [ ] list users
   - [x] update / put user mutation
   - [x] graphql interface
 - DB
