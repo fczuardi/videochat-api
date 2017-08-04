@@ -6,9 +6,11 @@ const api = require("./lib/api");
 const app = express();
 app.use(config.api.path, api);
 
-// add a user in the db if empty and start the api server
+// add a users in the db if empty and start the api server
+// updateUser({ name: "foo2" }, () => null);
 updateUser(
     {
+        id: "aa1425ef-c338-4be6-a144-2acb361a8e31",
         name: "John Doe",
         email: "mail@example.com"
     },
