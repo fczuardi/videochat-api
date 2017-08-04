@@ -1,4 +1,6 @@
 ### WIP
+- Documentaion
+  - [x] README with graphQL samples
 - API
   - [x] update / put user mutation
   - [x] graphql interface
