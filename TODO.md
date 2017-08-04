@@ -1,11 +1,14 @@
+### Milestones
+
+#### Consierge Demo (Wed, 9 Aug 2017)
+
+Button on a website that calls the web app in the presenters phone.
+
 ### WIP
   - [ ]  [API, DB] list users
   - [ ]  [WebPush] include VAPID and GCM credentials in the config file
   - [ ]  [API, WebPush] endpoint for sending notification to another user
-  - [x]  [Documentation] README with graphQL samples
-  - [x]  [API] update / put user mutation
-  - [x]  [API] graphql interface
-  - [ ]  [DB, WebPush] include webpush subscription object in the user model
+  - [ ]  [Architecture, DB, WebPush] include webpush subscription object in the user model
     - it looks like this:
     ```
     {
@@ -16,6 +19,13 @@
         }
     }
     ```
+  - [ ]  [OpenTok] read docs again, see if there is something to store in the backend
+  - [ ]  [Architecture, DB, API] roles: attendant, user
+  - [ ]  [Architecture, DB, API] attendant groups (employee/customer)
+  - [ ]  [Architecture, DB, API] attendant status: available, offline, chatting
+  - [x]  [Documentation] README with graphQL samples
+  - [x]  [API] update / put user mutation
+  - [x]  [API] graphql interface
   - [x]  [DB] function to add / update attendants in the db
 
 -----
