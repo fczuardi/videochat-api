@@ -5,11 +5,11 @@ const { buildSchema } = require("graphql");
 const graphqlHTTP = require("express-graphql");
 const extend = require("xtend");
 const config = require("./config");
-const { getUser, createUser, updateUser } = require("./db");
+const { getUser, getUserGroup, createUser, updateUser, listUsers } = require("./db");
 
 const schema = buildSchema(`
 type User {
-    id: ID!
+    id: ID!,
     name: String,
     email: String
 }
@@ -17,8 +17,15 @@ input UserInput {
     name: String,
     email: String
 }
+type UserGroup {
+    id: ID!,
+    name: String,
+    users: [User]
+}
 type Query {
-    user(id: ID!): User
+    user(id: ID!): User,
+    users: [ID!],
+    userGroup(id: ID!): UserGroup
 }
 type Mutation {
     createUser(user: UserInput): User,
@@ -35,11 +42,16 @@ type apiRoot = {
     updateUser: ({ id: string, user: User }) => Promise<User | void>
 };
 const root: apiRoot = {
+    users: () => listUsers(),
     user: ({ id }) =>
         new Promise((resolve, reject) =>
             getUser(id, createPromiseCb(resolve, reject))
         ).then(user => user),
-    createUser: ({user}) =>
+    useerGroup: ({ id }) =>
+        new Promise((resolve, reject) =>
+            getUserGroup(id, createPromiseCb(resolve, reject))
+        ).then(group => group),
+    createUser: ({ user }) =>
         new Promise((resolve, reject) =>
             createUser(user, createPromiseCb(resolve, reject))
         ).then(user => user),

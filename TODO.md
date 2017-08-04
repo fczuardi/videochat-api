@@ -6,6 +6,7 @@ Button on a website that calls the web app in the presenters phone.
 
 ### WIP
   - [ ]  [API, DB] list users
+  - [ ]  [API, DB] list users with filter (from a group, with role attendant, with status available)
   - [ ]  [WebPush] include VAPID and GCM credentials in the config file
   - [ ]  [API, WebPush] endpoint for sending notification to another user
   - [ ]  [Architecture, DB, WebPush] include webpush subscription object in the user model

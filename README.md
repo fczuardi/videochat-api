@@ -58,3 +58,9 @@ mutation {
 }
 ```
 
+### list (TBD)
+```
+{
+  users
+}
+```

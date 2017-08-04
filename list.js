@@ -1,9 +1,3 @@
-const db = require("level-sublevel")(
-    require("level")("./db", { valueEncoding: "json" })
-);
+const {listUsers} = require('./lib/db.js')
 
-const users = db.sublevel("users", { valueEncoding: "json" });
-
-const stream = users.createReadStream();
-
-stream.on("data", console.log);
+listUsers().then(console.log);

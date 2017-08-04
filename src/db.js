@@ -11,10 +11,15 @@ const extend = require("xtend");
 const db = require("level-sublevel")(require("level")("./db"));
 
 const users = db.sublevel("users", { valueEncoding: "json" });
+const userGroups = db.sublevel("userGroups");
 
 type GetUser = (key: string, cb: UserDBCallback) => void;
 const getUser: GetUser = (key, cb) =>
     users.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
+
+type GetUserGroup = GetUser;
+const getUserGroup: GetUserGroup = (key, cb) =>
+    userGroups.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
 
 type PutUser = (key: string, user: User, cb: UserDBCallback) => void;
 const putUser: PutUser = (key, user, cb) =>
@@ -42,8 +47,17 @@ const updateUser: UpdateUser = (user, cb) => {
     });
 };
 
+const listUsers = () => new Promise(resolve => {
+    let values = [];
+    const stream = users.createValueStream();
+    stream.on('data', data => values.push(data.id));
+    stream.on('end', () => resolve(values));
+});
+
 module.exports = {
     getUser,
     createUser,
-    updateUser
+    updateUser,
+    listUsers,
+    getUserGroup
 };
