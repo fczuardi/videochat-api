@@ -5,21 +5,13 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
+  - [ ]  [Client-Attendant] Allow notifications
+  - [ ]  [Client-Attendant] Update user entry to add webpush channel details
+  - [ ]  [Architecture, DB, WebPush] include webpush subscription object in the user model
   - [ ]  [Client-Embed] ping attendant 
-  - [ ]  [API, DB] list users with filter (from a group, with role attendant, with status available)
   - [ ]  [WebPush] include VAPID and GCM credentials in the config file
   - [ ]  [API, WebPush] endpoint for sending notification to another user
-  - [ ]  [Architecture, DB, WebPush] include webpush subscription object in the user model
-    - it looks like this:
-    ```
-    {
-        "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gA...vGasFINip-sqz8",
-        "keys": {
-            "auth":"24m...uUg",
-            "p256dh":"BGA5X...jU"
-        }
-    }
-    ```
+  - [ ]  [API, DB] list users with filter (from a group, with role attendant, with status available)
   - [ ]  [OpenTok] read docs again, see if there is something to store in the backend
   - [ ]  [Architecture, DB, API] roles: attendant, user
   - [ ]  [Architecture, DB, API] attendant groups (employee/customer)
