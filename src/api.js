@@ -13,6 +13,11 @@ type User {
     name: String,
     email: String
 }
+type Room {
+    apiKey: String,
+    sessionId: String,
+    token: String
+}
 input UserInput {
     name: String,
     email: String
@@ -25,7 +30,8 @@ type UserGroup {
 type Query {
     user(id: ID!): User,
     users: [ID!],
-    userGroup(id: ID!): UserGroup
+    userGroup(id: ID!): UserGroup,
+    room: Room
 }
 type Mutation {
     createUser(user: UserInput): User,
@@ -58,7 +64,14 @@ const root: apiRoot = {
     updateUser: ({ id, user }) =>
         new Promise((resolve, reject) =>
             updateUser(extend(user, { id }), createPromiseCb(resolve, reject))
-        ).then(user => user)
+        ).then(user => user),
+    room: () =>
+        new Promise((resolve, reject) => {
+            // create session
+            // get token
+            // apiKey (config.opentok.apiKey)
+            return resolve({apiKey: config.opentok.apiKey, sessionId: '', token: ''})
+        })
 };
 
 module.exports = graphqlHTTP({
