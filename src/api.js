@@ -5,7 +5,18 @@ const { buildSchema } = require("graphql");
 const graphqlHTTP = require("express-graphql");
 const extend = require("xtend");
 const config = require("./config");
-const { getUser, getUserGroup, createUser, updateUser, listUsers } = require("./db");
+const {
+    getUser,
+    getUserGroup,
+    createUser,
+    updateUser,
+    listUsers
+} = require("./db");
+
+const OpenTok = require("opentok");
+
+const { opentok: { apiKey, secret } } = config;
+const openTok = new OpenTok(apiKey, secret);
 
 const schema = buildSchema(`
 type User {
@@ -67,10 +78,26 @@ const root: apiRoot = {
         ).then(user => user),
     room: () =>
         new Promise((resolve, reject) => {
-            // create session
-            // get token
-            // apiKey (config.opentok.apiKey)
-            return resolve({apiKey: config.opentok.apiKey, sessionId: '', token: ''})
+            return openTok.createSession(
+                config.opentok.sessionOptions,
+                (err, session) => {
+                    if (err) {
+                        console.error(err);
+                        return reject(err);
+                    }
+                    const token = openTok.generateToken(session.sessionId);
+                    console.log({
+                        apiKey: config.opentok.apiKey,
+                        sessionId: session.sessionId,
+                        token
+                    });
+                    return resolve({
+                        apiKey: config.opentok.apiKey,
+                        sessionId: session.sessionId,
+                        token
+                    });
+                }
+            );
         })
 };
 
