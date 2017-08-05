@@ -8,7 +8,7 @@ apiKey = 'YOUR_API_KEY'
 secret = 'YOUR_SECRET'
 
 # See https://tokbox.com/developer/sdks/node/reference/OpenTok.html#createSession
-# [opentok.sessionOptions]
+[opentok.sessionOptions]
+mediaMode = 'relayed'
+archiveMode = 'manual'
 # location = ''
-# mediaMode = ''
-# archiveMode = ''
