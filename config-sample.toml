@@ -3,3 +3,6 @@ port = 4000
 path = '/graphql'
 graphiql = true
 
+[opentok]
+apiKey = 'YOUR_API_KEY'
+secret = 'YOUR_SECRET'
