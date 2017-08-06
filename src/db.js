@@ -47,12 +47,13 @@ const updateUser: UpdateUser = (user, cb) => {
     });
 };
 
-const listUsers = () => new Promise(resolve => {
-    let values = [];
-    const stream = users.createValueStream();
-    stream.on('data', data => values.push(data.id));
-    stream.on('end', () => resolve(values));
-});
+const listUsers = () =>
+    new Promise(resolve => {
+        let values = [];
+        const stream = users.createValueStream();
+        stream.on("data", data => values.push(data.id));
+        stream.on("end", () => resolve(values));
+    });
 
 module.exports = {
     getUser,
