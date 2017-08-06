@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nps",
     "test": "nps test",
-    "postinstall": "cpy --no-overwrite --rename config.toml config-sample.toml ."
+    "postinstall": "cpy --no-overwrite --rename config.toml config-sample.toml .",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -42,6 +44,8 @@
     "opentok": "^2.6.0",
     "toml-require": "^1.1.0",
     "uuid": "^3.1.0",
-    "xtend": "^4.0.1"
-  }
+    "xtend": "^4.0.1",
+    "snyk": "^1.38.1"
+  },
+  "snyk": true
 }
