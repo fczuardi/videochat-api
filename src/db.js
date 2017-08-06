@@ -11,7 +11,7 @@ const extend = require("xtend");
 const db = require("level-sublevel")(require("level")("./db"));
 
 const users = db.sublevel("users", { valueEncoding: "json" });
-const userGroups = db.sublevel("userGroups");
+const userGroups = db.sublevel("userGroups", { valueEncoding: "json" });
 
 type GetUser = (key: string, cb: UserDBCallback) => void;
 const getUser: GetUser = (key, cb) =>
@@ -20,6 +20,32 @@ const getUser: GetUser = (key, cb) =>
 type GetUserGroup = GetUser;
 const getUserGroup: GetUserGroup = (key, cb) =>
     userGroups.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
+
+const createUserGroup = name => {
+    const key = uuid();
+    const newGroup = {
+        id: key,
+        name,
+        availableUsers: []
+    };
+    console.log({ newGroup });
+    return new Promise((resolve, reject) => {
+        userGroups.put(
+            key,
+            newGroup,
+            (err, value) => (err ? reject(err) : resolve(value))
+        );
+    });
+};
+
+const listUserGroups = () => {
+    return new Promise((resolve, reject) => {
+        let values = [];
+        const stream = userGroups.createValueStream();
+        stream.on("data", data => values.push(data.id));
+        stream.on("end", () => resolve(values));
+    });
+};
 
 type PutUser = (key: string, user: User, cb: UserDBCallback) => void;
 const putUser: PutUser = (key, user, cb) =>
@@ -60,5 +86,7 @@ module.exports = {
     createUser,
     updateUser,
     listUsers,
-    getUserGroup
+    getUserGroup,
+    createUserGroup,
+    listUserGroups
 };

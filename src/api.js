@@ -10,6 +10,8 @@ const {
     getUserGroup,
     createUser,
     updateUser,
+    createUserGroup,
+    listUserGroups,
     listUsers
 } = require("./db");
 
@@ -44,6 +46,7 @@ type Query {
     user(id: ID!): User
     users: [ID!]
     userGroup(id: ID!): UserGroup
+    userGroups: [ID!]
     room: Room
 }
 type Mutation {
@@ -51,6 +54,7 @@ type Mutation {
     answerCall(id: ID!): String
     hangupCall(id: ID!): String
     createUser(user: UserInput): User
+    createUserGroup(name: String): UserGroup
     updateUser(id: ID!, user: UserInput): User
 }
 `);
@@ -65,14 +69,17 @@ type apiRoot = {
 };
 const root: apiRoot = {
     callUser: ({ id }) => {
-        return 'callUser return TBD'
+        return "callUser return TBD";
     },
     answerCall: ({ id }) => {
-        return 'answwerCall return TBD'
+        return "answwerCall return TBD";
     },
-    hangupCall:({ id }) => {
-        return 'hangupCall return TBD'
+    hangupCall: ({ id }) => {
+        return "hangupCall return TBD";
     },
+    userGroups: () => listUserGroups().then(groupList => groupList),
+    createUserGroup: ({ name }) =>
+        createUserGroup(name).then(userGroup => userGroup),
     users: () => listUsers(),
     user: ({ id }) =>
         new Promise((resolve, reject) =>
