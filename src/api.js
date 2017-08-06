@@ -20,32 +20,37 @@ const openTok = new OpenTok(apiKey, secret);
 
 const schema = buildSchema(`
 type User {
-    id: ID!,
-    name: String,
+    id: ID!
+    name: String
     email: String
+    groups: [ID!]
+}
+type UserGroup {
+    id: ID!
+    name: String
+    availableUsers: [ID!]
 }
 type Room {
-    apiKey: String,
-    sessionId: String,
+    apiKey: String
+    sessionId: String
     token: String
 }
 input UserInput {
-    name: String,
+    name: String
     email: String
 }
-type UserGroup {
-    id: ID!,
-    name: String,
-    users: [User]
-}
 type Query {
-    user(id: ID!): User,
-    users: [ID!],
-    userGroup(id: ID!): UserGroup,
+    availableUser(groupId: ID!): [User]
+    user(id: ID!): User
+    users: [ID!]
+    userGroup(id: ID!): UserGroup
     room: Room
 }
 type Mutation {
-    createUser(user: UserInput): User,
+    callUser(id: ID!): String
+    answerCall(id: ID!): String
+    hangupCall(id: ID!): String
+    createUser(user: UserInput): User
     updateUser(id: ID!, user: UserInput): User
 }
 `);
@@ -59,6 +64,15 @@ type apiRoot = {
     updateUser: ({ id: string, user: User }) => Promise<User | void>
 };
 const root: apiRoot = {
+    callUser: ({ id }) => {
+        return 'callUser return TBD'
+    },
+    answerCall: ({ id }) => {
+        return 'answwerCall return TBD'
+    },
+    hangupCall:({ id }) => {
+        return 'hangupCall return TBD'
+    },
     users: () => listUsers(),
     user: ({ id }) =>
         new Promise((resolve, reject) =>
