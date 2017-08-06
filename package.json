@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nps",
-    "test": "nps test",
+    "test": "snyk test && nps test",
     "postinstall": "cpy --no-overwrite --rename config.toml config-sample.toml .",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
