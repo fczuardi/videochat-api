@@ -12,7 +12,9 @@ const {
     updateUser,
     createUserGroup,
     listUserGroups,
-    listUsers
+    listUsers,
+    makeUserAvailable,
+    makeUserUnavailable
 } = require("./db");
 
 const OpenTok = require("opentok");
@@ -40,6 +42,7 @@ type Room {
 input UserInput {
     name: String
     email: String
+    groups: [ID]
 }
 type Query {
     availableUser(groupId: ID!): [User]
@@ -51,8 +54,8 @@ type Query {
 }
 type Mutation {
     callUser(id: ID!): String
-    answerCall(id: ID!): String
-    hangupCall(id: ID!): String
+    answerCall(id: ID!): [ID]
+    hangupCall(id: ID!): [ID]
     createUser(user: UserInput): User
     createUserGroup(name: String): UserGroup
     updateUser(id: ID!, user: UserInput): User
@@ -71,12 +74,9 @@ const root: apiRoot = {
     callUser: ({ id }) => {
         return "callUser return TBD";
     },
-    answerCall: ({ id }) => {
-        return "answwerCall return TBD";
-    },
-    hangupCall: ({ id }) => {
-        return "hangupCall return TBD";
-    },
+    answerCall: ({ id }) => makeUserUnavailable(id)
+    .then(groups => groups),
+    hangupCall: ({ id }) => makeUserAvailable(id).then(groups => groups),
     userGroups: () => listUserGroups().then(groupList => groupList),
     createUserGroup: ({ name }) =>
         createUserGroup(name).then(userGroup => userGroup),
@@ -85,7 +85,7 @@ const root: apiRoot = {
         new Promise((resolve, reject) =>
             getUser(id, createPromiseCb(resolve, reject))
         ).then(user => user),
-    useerGroup: ({ id }) =>
+    userGroup: ({ id }) =>
         new Promise((resolve, reject) =>
             getUserGroup(id, createPromiseCb(resolve, reject))
         ).then(group => group),

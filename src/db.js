@@ -21,6 +21,87 @@ type GetUserGroup = GetUser;
 const getUserGroup: GetUserGroup = (key, cb) =>
     userGroups.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
 
+const makeUserUnavailable = userId => {
+    return new Promise((resolve, reject) =>
+        getUser(userId, (err, user) => {
+            if (err) {
+                return reject(err);
+            }
+            const { groups } = user;
+            let updatedGroups = [];
+            groups.forEach(groupId => {
+                updatedGroups.push(
+                    new Promise((resolve, reject) => {
+                        userGroups.get(groupId, (err, group) => {
+                            if(!group.availableUsers.includes(userId)) {
+                                return resolve(groupId)
+                            }
+                            const list = group.availableUsers
+                                        .filter(id => id !== userId)
+                            userGroups.put(
+                                groupId,
+                                extend(group, {
+                                    availableUsers: list
+                                }),
+                                err => {
+                                    if (err) {
+                                        return reject(err);
+                                    }
+                                    return resolve(groupId);
+                                }
+                            );
+                        });
+                    })
+                );
+            });
+            return Promise.all(updatedGroups).then(values => {
+                resolve(values);
+            });
+        })
+    );
+};
+
+const makeUserAvailable = userId => {
+    return new Promise((resolve, reject) =>
+        getUser(userId, (err, user) => {
+            if (err) {
+                return reject(err);
+            }
+            const { groups } = user;
+            let updatedGroups = [];
+            groups.forEach(groupId => {
+                updatedGroups.push(
+                    new Promise((resolve, reject) => {
+                        userGroups.get(groupId, (err, group) => {
+                            if(group.availableUsers.includes(userId)) {
+                                return resolve(groupId)
+                            }
+                            userGroups.put(
+                                groupId,
+                                extend(group, {
+                                    availableUsers: [
+                                        ...group.availableUsers,
+                                        userId
+                                    ]
+                                }),
+                                err => {
+                                    if (err) {
+                                        return reject(err);
+                                    }
+                                    return resolve(groupId);
+                                }
+                            );
+                        });
+                    })
+                );
+            });
+            return Promise.all(updatedGroups).then(values => {
+                resolve(values);
+            });
+        })
+    );
+};
+
 const createUserGroup = name => {
     const key = uuid();
     const newGroup = {
@@ -33,7 +114,7 @@ const createUserGroup = name => {
         userGroups.put(
             key,
             newGroup,
-            (err, value) => (err ? reject(err) : resolve(value))
+            (err, value) => (err ? reject(err) : resolve(newGroup))
         );
     });
 };
@@ -88,5 +169,7 @@ module.exports = {
     listUsers,
     getUserGroup,
     createUserGroup,
-    listUserGroups
+    listUserGroups,
+    makeUserAvailable,
+    makeUserUnavailable
 };
