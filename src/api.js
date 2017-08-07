@@ -45,57 +45,47 @@ input UserInput {
     groups: [ID]
 }
 type Query {
-    availableUser(groupId: ID!): [User]
-    user(id: ID!): User
     users: [ID!]
-    userGroup(id: ID!): UserGroup
+    user(id: ID!): User
     userGroups: [ID!]
+    userGroup(id: ID!): UserGroup
+    availableUser(groupId: ID!): [User]
     room: Room
 }
 type Mutation {
-    callUser(id: ID!): String
-    answerCall(id: ID!): [ID]
-    hangupCall(id: ID!): [ID]
     createUser(user: UserInput): User
+    updateUser(id: ID!, update: UserInput): User
     createUserGroup(name: String): UserGroup
-    updateUser(id: ID!, user: UserInput): User
+    hangupCall(id: ID!): [ID]
+    answerCall(id: ID!): [ID]
+    callUser(id: ID!): String
 }
 `);
 
 const createPromiseCb = (resolve, reject) => (err, value) =>
     err ? reject(err) : resolve(value);
 
-type apiRoot = {
-    user: ({ id: string }) => Promise<User | void>,
-    createUser: ({ user: User }) => Promise<User | void>,
-    updateUser: ({ id: string, user: User }) => Promise<User | void>
-};
-const root: apiRoot = {
+// type apiRoot = {
+// user: ({ id: string }) => Promise<User | void>,
+// createUser: ({ user: User }) => Promise<User>,
+// updateUser: ({ id: string, user: User }) => Promise<User | void>
+// };
+// const root: apiRoot = {
+const root = {
+    users: () => listUsers(),
+    user: ({ id }) => getUser(id),
+    userGroups: () => listUserGroups(),
+    userGroup: ({ id }) => getUserGroup(id),
+
+    createUser: ({ user }) => createUser(user),
+    updateUser: ({ id, update }) => updateUser(extend(update, { id })),
+    createUserGroup: ({ name }) => createUserGroup(name),
+    hangupCall: ({ id }) => makeUserAvailable(id),
+    answerCall: ({ id }) => makeUserUnavailable(id),
+
     callUser: ({ id }) => {
         return "callUser return TBD";
     },
-    answerCall: ({ id }) => makeUserUnavailable(id).then(groups => groups),
-    hangupCall: ({ id }) => makeUserAvailable(id).then(groups => groups),
-    userGroups: () => listUserGroups().then(groupList => groupList),
-    createUserGroup: ({ name }) =>
-        createUserGroup(name).then(userGroup => userGroup),
-    users: () => listUsers(),
-    user: ({ id }) =>
-        new Promise((resolve, reject) =>
-            getUser(id, createPromiseCb(resolve, reject))
-        ).then(user => user),
-    userGroup: ({ id }) =>
-        new Promise((resolve, reject) =>
-            getUserGroup(id, createPromiseCb(resolve, reject))
-        ).then(group => group),
-    createUser: ({ user }) =>
-        new Promise((resolve, reject) =>
-            createUser(user, createPromiseCb(resolve, reject))
-        ).then(user => user),
-    updateUser: ({ id, user }) =>
-        new Promise((resolve, reject) =>
-            updateUser(extend(user, { id }), createPromiseCb(resolve, reject))
-        ).then(user => user),
     room: () =>
         new Promise((resolve, reject) => {
             return openTok.createSession(

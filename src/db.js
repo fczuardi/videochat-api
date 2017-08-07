@@ -2,10 +2,12 @@
 export type User = {
     id?: string,
     name?: string,
-    email?: string
+    email?: string,
+    groups: string[]
 };
-type UserDBCallback = (err: Error | null, value?: User) => void;
+type Group = {id: string, name:string, availableUsers:string};
 
+const promisify = require("util.promisify");
 const uuid = require("uuid/v4");
 const extend = require("xtend");
 const db = require("level-sublevel")(require("level")("./db"));
@@ -13,111 +15,72 @@ const db = require("level-sublevel")(require("level")("./db"));
 const users = db.sublevel("users", { valueEncoding: "json" });
 const userGroups = db.sublevel("userGroups", { valueEncoding: "json" });
 
-type GetUser = (key: string, cb: UserDBCallback) => void;
-const getUser: GetUser = (key, cb) =>
-    users.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
+const getUser = promisify(users.get);
+const putUser = promisify(users.put);
+const getUserGroup = promisify(userGroups.get);
+const putUserGroup = promisify(userGroups.put);
 
-type GetUserGroup = GetUser;
-const getUserGroup: GetUserGroup = (key, cb) =>
-    userGroups.get(key, (err, value) => (err ? cb(err) : cb(null, value)));
-
-const makeUserUnavailable = userId => {
-    return new Promise((resolve, reject) =>
-        getUser(userId, (err, user) => {
-            if (err) {
-                return reject(err);
-            }
-            const { groups } = user;
-            let updatedGroups = [];
-            groups.forEach(groupId => {
-                updatedGroups.push(
-                    new Promise((resolve, reject) => {
-                        userGroups.get(groupId, (err, group) => {
-                            if (!group.availableUsers.includes(userId)) {
-                                return resolve(groupId);
-                            }
-                            const list = group.availableUsers.filter(
-                                id => id !== userId
-                            );
-                            userGroups.put(
-                                groupId,
-                                extend(group, {
-                                    availableUsers: list
-                                }),
-                                err => {
-                                    if (err) {
-                                        return reject(err);
-                                    }
-                                    return resolve(groupId);
-                                }
-                            );
-                        });
+type MakeUserAvailable = (userId: string) => Promise<string[]>;
+const makeUserAvailable:MakeUserAvailable = async function(userId) {
+    const user = await getUser(userId);
+    if (!user.groups) {
+        return [];
+    }
+    const groups = user.groups;
+    let editedGroups = [];
+    groups.forEach(groupId =>
+        editedGroups.push(
+            getUserGroup(groupId).then(group => {
+                if (group.availableUsers.includes(userId)) {
+                    return null;
+                }
+                return putUserGroup(
+                    groupId,
+                    extend(group, {
+                        availableUsers: [...group.availableUsers, userId]
                     })
-                );
-            });
-            return Promise.all(updatedGroups).then(values => {
-                resolve(values);
-            });
-        })
+                ).then(() => groupId);
+            })
+        )
     );
+    return Promise.all(editedGroups);
 };
 
-const makeUserAvailable = userId => {
-    return new Promise((resolve, reject) =>
-        getUser(userId, (err, user) => {
-            if (err) {
-                return reject(err);
-            }
-            const { groups } = user;
-            let updatedGroups = [];
-            groups.forEach(groupId => {
-                updatedGroups.push(
-                    new Promise((resolve, reject) => {
-                        userGroups.get(groupId, (err, group) => {
-                            if (group.availableUsers.includes(userId)) {
-                                return resolve(groupId);
-                            }
-                            userGroups.put(
-                                groupId,
-                                extend(group, {
-                                    availableUsers: [
-                                        ...group.availableUsers,
-                                        userId
-                                    ]
-                                }),
-                                err => {
-                                    if (err) {
-                                        return reject(err);
-                                    }
-                                    return resolve(groupId);
-                                }
-                            );
-                        });
+type MakeUserUnavailable = MakeUserAvailable;
+const makeUserUnavailable:MakeUserUnavailable = async function(userId) {
+    const user = await getUser(userId);
+    if (!user.groups) {
+        return [];
+    }
+    const groups = user.groups;
+    let editedGroups = [];
+    groups.forEach(groupId =>
+        editedGroups.push(
+            getUserGroup(groupId).then(group => {
+                if (!group.availableUsers.includes(userId)) {
+                    return null;
+                }
+                return putUserGroup(
+                    groupId,
+                    extend(group, {
+                        availableUsers: group.availableUsers.filter(id => id !== userId)
                     })
-                );
-            });
-            return Promise.all(updatedGroups).then(values => {
-                resolve(values);
-            });
-        })
+                ).then(() => groupId);
+            })
+        )
     );
+    return Promise.all(editedGroups);
 };
 
-const createUserGroup = name => {
+type CreateUserGroup = (name: string) => Promise<Group>;
+const createUserGroup: CreateUserGroup = name => {
     const key = uuid();
     const newGroup = {
         id: key,
         name,
         availableUsers: []
     };
-    console.log({ newGroup });
-    return new Promise((resolve, reject) => {
-        userGroups.put(
-            key,
-            newGroup,
-            (err, value) => (err ? reject(err) : resolve(newGroup))
-        );
-    });
+    return putUserGroup(key, newGroup).then(() => newGroup);
 };
 
 const listUserGroups = () => {
@@ -129,30 +92,26 @@ const listUserGroups = () => {
     });
 };
 
-type PutUser = (key: string, user: User, cb: UserDBCallback) => void;
-const putUser: PutUser = (key, user, cb) =>
-    users.put(key, user, err => (err ? cb(err) : getUser(key, cb)));
-
-type CreateUser = (user: User, cb: UserDBCallback) => void;
-const createUser: CreateUser = (user, cb) => {
+type CreateUser = (user:string) => Promise<User>;
+const createUser:CreateUser = user => {
     const key = user.id || uuid();
-    return putUser(key, extend(user, { id: key }), cb);
+    const newUser = extend(user, { id: key });
+    try {
+        return putUser(key, newUser).then(() => newUser);
+    } catch (err) {
+        return err;
+    }
 };
 
-type UpdateUser = CreateUser;
-const updateUser: UpdateUser = (user, cb) => {
-    const key = user.id;
-    if (!key) {
-        return createUser(user, cb);
+type UpdateUser = (update: User) => Promise<User>;
+const updateUser: UpdateUser = async function(update) {
+    try {
+        const user = await getUser(update.id);
+        const newUser = extend(user, update)
+        return putUser(user.id, newUser).then(() => newUser);
+    } catch (err) {
+        return err;
     }
-    return getUser(key, (err, oldUser) => {
-        if (err) {
-            return err.type === "NotFoundError"
-                ? createUser(user, cb)
-                : cb(err);
-        }
-        return putUser(key, extend(oldUser, user), cb);
-    });
 };
 
 const listUsers = () =>
