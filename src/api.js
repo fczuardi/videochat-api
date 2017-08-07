@@ -5,6 +5,7 @@ const { buildSchema } = require("graphql");
 const graphqlHTTP = require("express-graphql");
 const extend = require("xtend");
 const config = require("./config");
+const {notifyUser, notifyUserGroup} = require('./webpush');
 const {
     getUser,
     getUserGroup,
@@ -71,6 +72,8 @@ type Mutation {
     createUser(user: UserInput): User
     updateUser(id: ID!, update: UserInput): User
     createUserGroup(name: String): UserGroup
+    notifyUser(id: ID!, payload: String): String
+    notifyUserGroup(id: ID!, payload: String): [String]
     hangupCall(id: ID!): [ID]
     answerCall(id: ID!): [ID]
     callUser(id: ID!): String
@@ -90,6 +93,9 @@ const root = {
     createUser: ({ user }) => createUser(user),
     updateUser: ({ id, update }) => updateUser(extend(update, { id })),
     createUserGroup: ({ name }) => createUserGroup(name),
+    notifyUser: ({id, payload}) => notifyUser(id, payload),
+    notifyUserGroup: ({id, payload}) => notifyUserGroup(id, payload),
+
     hangupCall: ({ id }) => makeUserAvailable(id),
     answerCall: ({ id }) => makeUserUnavailable(id),
 
