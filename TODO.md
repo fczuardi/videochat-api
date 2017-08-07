@@ -11,11 +11,11 @@ Button on a website that calls the web app in the presenters phone.
   - [ ]  [Client-Embed] ping attendant 
   - [ ]  [WebPush] include VAPID and GCM credentials in the config file
   - [ ]  [API, WebPush] endpoint for sending notification to another user
-  - [ ]  [API, DB] list users with filter (from a group, with role attendant, with status available)
-  - [ ]  [OpenTok] read docs again, see if there is something to store in the backend
-  - [ ]  [Architecture, DB, API] roles: attendant, user
-  - [ ]  [Architecture, DB, API] attendant groups (employee/customer)
-  - [ ]  [Architecture, DB, API] attendant status: available, offline, chatting
+  - [x]  [API, DB] list users with filter (from a group, with role attendant, with status available)
+  - [x]  [OpenTok] read docs again, see if there is something to store in the backend
+  - [x]  [Architecture, DB, API] roles: attendant, user
+  - [x]  [Architecture, DB, API] attendant groups (employee/customer)
+  - [x]  [Architecture, DB, API] attendant status: available, offline, chatting
   - [x]  [Client-Attendant, signup] create user call 
   - [x]  [API, DB] list users
   - [x]  [Documentation] README with graphQL samples
