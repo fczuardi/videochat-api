@@ -46,6 +46,7 @@
     "toml-require": "^1.1.0",
     "util.promisify": "^1.0.0",
     "uuid": "^3.1.0",
+    "web-push": "^3.2.2",
     "xtend": "^4.0.1"
   },
   "snyk": true

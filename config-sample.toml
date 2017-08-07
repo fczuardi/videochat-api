@@ -18,3 +18,10 @@ archiveMode = "manual"
 pubKey = ""
 privKey = ""
 subject = "mailto: mail@example.com"
+
+# create a Firebase app and get the Cloud Messaging credentials on the settings page
+# Example: 
+# https://console.firebase.google.com/u/0/project/SOME_PROJECT/settings/cloudmessaging/
+[gcm]
+serverKey =""
+
