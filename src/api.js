@@ -74,8 +74,7 @@ const root: apiRoot = {
     callUser: ({ id }) => {
         return "callUser return TBD";
     },
-    answerCall: ({ id }) => makeUserUnavailable(id)
-    .then(groups => groups),
+    answerCall: ({ id }) => makeUserUnavailable(id).then(groups => groups),
     hangupCall: ({ id }) => makeUserAvailable(id).then(groups => groups),
     userGroups: () => listUserGroups().then(groupList => groupList),
     createUserGroup: ({ name }) =>

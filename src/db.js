@@ -33,11 +33,12 @@ const makeUserUnavailable = userId => {
                 updatedGroups.push(
                     new Promise((resolve, reject) => {
                         userGroups.get(groupId, (err, group) => {
-                            if(!group.availableUsers.includes(userId)) {
-                                return resolve(groupId)
+                            if (!group.availableUsers.includes(userId)) {
+                                return resolve(groupId);
                             }
-                            const list = group.availableUsers
-                                        .filter(id => id !== userId)
+                            const list = group.availableUsers.filter(
+                                id => id !== userId
+                            );
                             userGroups.put(
                                 groupId,
                                 extend(group, {
@@ -73,8 +74,8 @@ const makeUserAvailable = userId => {
                 updatedGroups.push(
                     new Promise((resolve, reject) => {
                         userGroups.get(groupId, (err, group) => {
-                            if(group.availableUsers.includes(userId)) {
-                                return resolve(groupId)
+                            if (group.availableUsers.includes(userId)) {
+                                return resolve(groupId);
                             }
                             userGroups.put(
                                 groupId,
