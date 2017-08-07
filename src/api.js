@@ -39,6 +39,9 @@ type Room {
     sessionId: String
     token: String
 }
+type PushServer {
+    pubKey: String
+}
 input UserInput {
     name: String
     email: String
@@ -49,7 +52,7 @@ type Query {
     user(id: ID!): User
     userGroups: [ID!]
     userGroup(id: ID!): UserGroup
-    availableUser(groupId: ID!): [User]
+    pushServer: PushServer
     room: Room
 }
 type Mutation {
@@ -65,17 +68,12 @@ type Mutation {
 const createPromiseCb = (resolve, reject) => (err, value) =>
     err ? reject(err) : resolve(value);
 
-// type apiRoot = {
-// user: ({ id: string }) => Promise<User | void>,
-// createUser: ({ user: User }) => Promise<User>,
-// updateUser: ({ id: string, user: User }) => Promise<User | void>
-// };
-// const root: apiRoot = {
 const root = {
     users: () => listUsers(),
     user: ({ id }) => getUser(id),
     userGroups: () => listUserGroups(),
     userGroup: ({ id }) => getUserGroup(id),
+    pushServer: () => ({ pubKey: config.webPush.pubKey }),
 
     createUser: ({ user }) => createUser(user),
     updateUser: ({ id, update }) => updateUser(extend(update, { id })),

@@ -1,14 +1,20 @@
 [api]
 port = 4000
-path = '/graphql'
+path = "/graphql"
 graphiql = true
 
 [opentok]
-apiKey = 'YOUR_API_KEY'
-secret = 'YOUR_SECRET'
+apiKey = ""
+secret = ""
 
 # See https://tokbox.com/developer/sdks/node/reference/OpenTok.html#createSession
 [opentok.sessionOptions]
-mediaMode = 'relayed'
-archiveMode = 'manual'
-# location = ''
+mediaMode = "relayed"
+archiveMode = "manual"
+# location = ""
+
+# generated with web-push generate-vapid-keys
+[webPush]
+pubKey = ""
+privKey = ""
+subject = "mailto: mail@example.com"
