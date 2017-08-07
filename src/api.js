@@ -23,11 +23,28 @@ const { opentok: { apiKey, secret } } = config;
 const openTok = new OpenTok(apiKey, secret);
 
 const schema = buildSchema(`
+type WebPushInfo {
+    endpoint: String
+    key: String
+    auth: String
+}
+input WebPushInfoInput {
+    endpoint: String
+    key: String
+    auth: String
+}
 type User {
     id: ID!
     name: String
     email: String
     groups: [ID!]
+    webPushInfo: WebPushInfo
+}
+input UserInput {
+    name: String
+    email: String
+    groups: [ID]
+    webPushInfo: WebPushInfoInput
 }
 type UserGroup {
     id: ID!
@@ -41,11 +58,6 @@ type Room {
 }
 type PushServer {
     pubKey: String
-}
-input UserInput {
-    name: String
-    email: String
-    groups: [ID]
 }
 type Query {
     users: [ID!]
