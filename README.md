@@ -23,6 +23,8 @@ npm start
 Make sure the option graphiql is set to true on your config.toml and access your
 localhost:port/path and try some of the queries below:
 
+For example **http://localhost:4000/graphql**
+
 ## API
 
 ### Users
