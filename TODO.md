@@ -5,23 +5,16 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
-  - [x]  [Client-Embed] ping attendant 
-  - [x]  [API, WebPush] endpoint for sending notification to another user
-  - [x]  [Client-Attendant] Update user entry to add webpush channel details
-  - [x]  [Architecture, DB, WebPush] include webpush subscription object in the user model
-  - [x]  [WebPush] include VAPID and GCM credentials in the config file
-  - [x]  [Client-Attendant] Allow notifications
-  - [x]  [API, DB] list users with filter (from a group, with role attendant, with status available)
-  - [x]  [OpenTok] read docs again, see if there is something to store in the backend
-  - [x]  [Architecture, DB, API] roles: attendant, user
-  - [x]  [Architecture, DB, API] attendant groups (employee/customer)
-  - [x]  [Architecture, DB, API] attendant status: available, offline, chatting
-  - [x]  [Client-Attendant, signup] create user call 
-  - [x]  [API, DB] list users
-  - [x]  [Documentation] README with graphQL samples
-  - [x]  [API] update / put user mutation
-  - [x]  [API] graphql interface
-  - [x]  [DB] function to add / update attendants in the db
+  - [ ]  [webapp, notification] Show Notification on push
+  - [ ]  [webapp, notification] Notification click should open app URL if browser / app closed
+  - [ ]  [webapp, notification] Pass room data as parameter and initialize session
+  - [ ]  [DB] Store Rooms info?
+  - [ ]  [webapp] make user unavailable (api request) when chat starts
+  - [ ]  [webapp] make user available upon button click
+  - [ ]  [embed, ui, css, opentok] Increase video height
+  - [ ]  [embed, webapp] Remove debug textareas and copy/paste
+  - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
+  - [ ]  [API, DB] accept range in notifyUserGroup
 
 -----
 
