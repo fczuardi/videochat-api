@@ -5,8 +5,8 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
-  - [ ]  [Client-Embed] ping attendant 
-  - [ ]  [API, WebPush] endpoint for sending notification to another user
+  - [x]  [Client-Embed] ping attendant 
+  - [x]  [API, WebPush] endpoint for sending notification to another user
   - [x]  [Client-Attendant] Update user entry to add webpush channel details
   - [x]  [Architecture, DB, WebPush] include webpush subscription object in the user model
   - [x]  [WebPush] include VAPID and GCM credentials in the config file
