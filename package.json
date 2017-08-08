@@ -32,7 +32,8 @@
     "flow-remove-types": "^1.2.1",
     "flow-typed": "^2.1.5",
     "nps": "^5.7.0",
-    "prettier": "^1.5.3"
+    "prettier": "^1.5.3",
+    "snyk": "^1.38.1"
   },
   "dependencies": {
     "cors": "^2.8.4",
@@ -42,7 +43,6 @@
     "level": "^1.7.0",
     "level-sublevel": "^6.6.1",
     "opentok": "^2.6.0",
-    "snyk": "^1.38.1",
     "toml-require": "^1.1.0",
     "util.promisify": "^1.0.0",
     "uuid": "^3.1.0",
