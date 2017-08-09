@@ -28,6 +28,5 @@ try {
             serverKey: process.env.gcm_serverKey
         }
     };
-
 }
 module.exports = config;
