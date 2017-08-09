@@ -6,16 +6,14 @@ Button on a website that calls the web app in the presenters phone.
 
 ### WIP
   - [ ]  [webapp, autologin] remember user credentials by storing them on localstorage
+  - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
   - [ ]  [documentation] how to install
   - [ ]  [documentation] how to create the first groups and users
   - [ ]  [webapp] make user unavailable (api request) when chat starts
   - [ ]  [webapp] make user available upon button click
-  - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
-  - [x]  [embed, ui, css, opentok] Increase video height
-  - [x]  [webapp, notification] Show Notification on push
-  - [x]  [webapp, notification] Notification click should open app URL if browser / app closed
-  - [x]  [webapp, notification] Pass room data as parameter and initialize session
-  - [x]  [embed, webapp] Remove debug textareas and copy/paste
+  - [ ]  [embed] Name, email mini form on the call button page
+  - [ ]  [webapp] Make notification stick
+  - [ ]  [documentation] Page with iframe code to copy paste
 
 -----
 
