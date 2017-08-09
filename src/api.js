@@ -112,11 +112,6 @@ const root = {
                         return reject(err);
                     }
                     const token = openTok.generateToken(session.sessionId);
-                    console.log({
-                        apiKey: config.opentok.apiKey,
-                        sessionId: session.sessionId,
-                        token
-                    });
                     return resolve({
                         apiKey: config.opentok.apiKey,
                         sessionId: session.sessionId,
