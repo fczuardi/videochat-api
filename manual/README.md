@@ -16,7 +16,7 @@ After this, restart the server and open the api console URL in your browser:
 
 ![screen shot 2017-08-09 at 15 43 51](https://user-images.githubusercontent.com/7760/29138287-9e915276-7d19-11e7-80d3-faf59b5c6b84.png)
 
-## createUserGroup
+### createUserGroup
 
 Now paste the following code in the left hand side of the console:
 
@@ -38,5 +38,41 @@ Drag the bottom part of the screen named "QUERY VARIABLES" up, and paste the fol
 Press the play button or Ctrl+Enter to run the query.
 
 ![screen shot 2017-08-09 at 15 53 05](https://user-images.githubusercontent.com/7760/29138697-eba0d0e0-7d1a-11e7-9642-57d830655b95.png)
+
+### userGroups
+
+You can get a list of the existing usergroups with the query:
+
+```graphql
+{userGroups}
+```
+
+### createUser
+
+With a group created we can now create our first User. The attendants of your helpdesk system will be the users. An user can belong to multiple groups.
+
+Here is a query to create a new user:
+
+```graphql
+mutation ($user: UserInput) {
+  createUser(user: $user) {
+    id
+    name
+    email
+    groups
+  }
+}
+```
+
+```json
+{
+  "user": {
+  	"name": "My First User",
+  	"email": "first@example.com",
+  	"groups": ["4b798dc7-ad10-4443-be43-de3ce299fa27"]
+	}
+}
+```
+
 
 
