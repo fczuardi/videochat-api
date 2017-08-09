@@ -5,10 +5,10 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
-  - [ ]  [embed, ui, css, opentok] Increase video height
-  - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
-  - [ ]  [webapp] make user available upon button click
   - [ ]  [webapp] make user unavailable (api request) when chat starts
+  - [ ]  [webapp] make user available upon button click
+  - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
+  - [x]  [embed, ui, css, opentok] Increase video height
   - [x]  [webapp, notification] Show Notification on push
   - [x]  [webapp, notification] Notification click should open app URL if browser / app closed
   - [x]  [webapp, notification] Pass room data as parameter and initialize session
