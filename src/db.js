@@ -110,6 +110,7 @@ const updateUser: UpdateUser = async function(update) {
         const newUser = extend(user, update)
         return putUser(user.id, newUser).then(() => newUser);
     } catch (err) {
+        console.error(err)
         return err;
     }
 };

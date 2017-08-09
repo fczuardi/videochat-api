@@ -5,7 +5,7 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
-  - [ ]  [webapp, autologin] remember user credentials by storing them on localstorage
+  - [x]  [webapp, autologin] remember user credentials by storing them on localstorage
   - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
   - [ ]  [documentation] how to install
   - [ ]  [documentation] how to create the first groups and users
