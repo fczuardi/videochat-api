@@ -5,6 +5,9 @@
 Button on a website that calls the web app in the presenters phone.
 
 ### WIP
+  - [ ]  [webapp, autologin] remember user credentials by storing them on localstorage
+  - [ ]  [documentation] how to install
+  - [ ]  [documentation] how to create the first groups and users
   - [ ]  [webapp] make user unavailable (api request) when chat starts
   - [ ]  [webapp] make user available upon button click
   - [ ]  [demo] Deploy a backend on a server with permanent URL (digital ocean? heroku?)
