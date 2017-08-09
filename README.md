@@ -25,46 +25,9 @@ localhost:port/path and try some of the queries below:
 
 For example **http://localhost:4000/graphql**
 
-## API
+## API Reference
 
-### Users
+https://github.com/fczuardi/videochat-api/blob/master/src/api.js#L63-L79
 
-#### create
-```
-mutation {
-  createUser(user: {name: "John Doe", email: "mail@example.com"}) {
-    id
-    name
-    email
-  }
-}
-```
-
-#### update
-```
-mutation {
-  updateUser(id: "60bbc381-3fd4-4275-a6bd-196b0436db8a", user: {name: "Jane Doe"}) {
-    name
-    email
-    id
-  }
-}
-```
-
-#### get
-```
-{
-  user(id: "60bbc381-3fd4-4275-a6bd-196b0436db8a") {
-    name
-  }
-}
-```
-
-### list (TBD)
-```
-{
-  users
-}
-```
 
 [videochat-client]: https://github.com/fczuardi/videochat-client
