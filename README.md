@@ -1,5 +1,5 @@
 # videochat-api
-Backend for the videochat-client project.
+Backend for the [videochat-client][videochat-client] project.
 
 ## Install
 
@@ -66,3 +66,5 @@ mutation {
   users
 }
 ```
+
+[videochat-client]: https://github.com/fczuardi/videochat-client
