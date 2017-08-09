@@ -35,7 +35,7 @@ https://github.com/fczuardi/videochat-api/blob/master/src/api.js#L63-L79
 
 ## Usage
 
-Please consult the manual for a tutorial on how to get the whole system up (server and clients).
+Please consult the [manual][manual] for a tutorial on how to get the whole system up (server and clients).
 
 [videochat-client]: https://github.com/fczuardi/videochat-client
 [configsample]: https://github.com/fczuardi/videochat-api/blob/master/config-sample.toml
