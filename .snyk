@@ -9,5 +9,5 @@ patch:
 ignore:
   'npm:bl:20160119':
     - level-sublevel > levelup > bl:
-        reason: None given
-        expires: '2017-09-05T12:31:40.998Z'
+        reason: no patch available yet
+        expires: '2017-10-14T13:34:57.416Z'

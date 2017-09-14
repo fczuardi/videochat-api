@@ -31,14 +31,14 @@
     "flow-bin": "^0.52.0",
     "flow-remove-types": "^1.2.1",
     "flow-typed": "^2.1.5",
-    "nps": "^5.7.0",
-    "prettier": "^1.5.3",
-    "snyk": "^1.38.1"
+    "nps": "^5.7.1",
+    "prettier": "^1.6.1",
+    "snyk": "^1.40.2"
   },
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.15.4",
-    "express-graphql": "^0.6.7",
+    "express-graphql": "^0.6.11",
     "graphql": "^0.10.5",
     "level": "^1.7.0",
     "level-sublevel": "^6.6.1",
@@ -46,7 +46,7 @@
     "toml-require": "^1.1.0",
     "util.promisify": "^1.0.0",
     "uuid": "^3.1.0",
-    "web-push": "^3.2.2",
+    "web-push": "^3.2.3",
     "xtend": "^4.0.1"
   },
   "snyk": true
