@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "express": "^4.15.4",
+    "express": "^4.17.3",
     "express-graphql": "^0.6.11",
     "graphql": "^0.10.5",
     "level": "^1.7.0",
